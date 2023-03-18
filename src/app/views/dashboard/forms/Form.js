@@ -17,7 +17,9 @@ import {
 } from '@mui/material';
 import { Span } from 'app/components/Typography';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
+import { Navigate } from 'react-router-dom';
 const Container = styled('div')(({ theme }) => ({
   margin: '30px',
   [theme.breakpoints.down('sm')]: { margin: '16px' },
@@ -34,6 +36,8 @@ const TextField = styled(TextValidator)(() => ({
 
 const Form = () => {
   const [state, setState] = useState({ date: new Date() });
+  const [classs, setClasss] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -43,10 +47,33 @@ const Form = () => {
     });
     return () => ValidatorForm.removeValidationRule('isPasswordMatch');
   }, [state.password]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/class`);
+        setClasss(res.data);
+      } catch (err) {
+        setError(err);
+      }
+    };
+    fetchData();
+  });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const userData = {
+      username,
+      email,
+      phone,
+      address,
+      password,
+      phone,
+      address,
+    };
+    try {
+      await axios.post('http://localhost:5000/api/userrs/register', userData);
 
-  const handleSubmit = (event) => {
-    // console.log("submitted");
-    // console.log(event);
+      Navigate('/dashboard/default');
+    } catch (err) {}
   };
 
   const handleChange = (event) => {
@@ -63,6 +90,8 @@ const Form = () => {
     mobile,
     password,
     confirmPassword,
+    phone,
+    address,
     gender,
     date,
     email,
@@ -85,36 +114,47 @@ const Form = () => {
                     type="text"
                     name="username"
                     id="standard-basic"
-                    value={username || ''}
+                    value="name"
                     onChange={handleChange}
                     errorMessages={['this field is required']}
-                    label="Name"
+                    label="Student Full Name"
                   />
                   <TextField
                     type="text"
-                    name="username"
+                    name="class"
                     id="standard-basic"
-                    value={username || ''}
-                    onChange={handleChange}
-                    errorMessages={['this field is required']}
-                    label="Parent"
-                  />
-                  <TextField
-                    type="text"
-                    name="username"
-                    id="standard-basic"
-                    value={username || ''}
+                    value="class"
                     onChange={handleChange}
                     errorMessages={['this field is required']}
                     label="Class"
                   />
+                  <select>
+                    <option selected="true" disabled="disabled">
+                      Class
+                    </option>
+                    {classs &&
+                      classs.map((item) => (
+                        <option className="yo" name="class">
+                          {item.name}
+                        </option>
+                      ))}
+                  </select>
+                  <TextField
+                    type="text"
+                    name="id_no"
+                    id="standard-basic"
+                    value="no"
+                    onChange={handleChange}
+                    errorMessages={['this field is required']}
+                    label="Id No"
+                  />
 
                   <TextField
                     type="text"
-                    name="firstName"
-                    label="Section"
+                    name="address"
+                    label="Address"
                     onChange={handleChange}
-                    value={firstName || ''}
+                    value="address"
                     validators={['required']}
                     errorMessages={['this field is required']}
                   />
@@ -123,7 +163,7 @@ const Form = () => {
                     type="email"
                     name="email"
                     label="Email"
-                    value={email || ''}
+                    value="email"
                     onChange={handleChange}
                     validators={['required', 'isEmail']}
                     errorMessages={['this field is required', 'email is not valid']}
@@ -136,30 +176,20 @@ const Form = () => {
                       renderInput={(props) => (
                         <TextField
                           {...props}
-                          label="Date picker"
+                          label="Birth Day"
                           id="mui-pickers-date"
                           sx={{ mb: 2, width: '100%' }}
                         />
                       )}
                     />
                   </LocalizationProvider>
-
-                  <TextField
-                    sx={{ mb: 4 }}
-                    type="number"
-                    name="creditCard"
-                    label="Id No"
-                    onChange={handleChange}
-                    value={creditCard || ''}
-                    errorMessages={['this field is required']}
-                  />
                 </Grid>
 
                 <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
                   <TextField
                     type="text"
                     name="mobile"
-                    value={mobile || ''}
+                    value="phone"
                     label="Mobile Number"
                     onChange={handleChange}
                     validators={['required']}
@@ -174,33 +204,6 @@ const Form = () => {
                     validators={['required']}
                     errorMessages={['this field is required']}
                   />{' '}
-                  <TextField
-                    type="text"
-                    name="firstName"
-                    label="Birthday"
-                    onChange={handleChange}
-                    value={firstName || ''}
-                    validators={['required']}
-                    errorMessages={['this field is required']}
-                  />
-                  <TextField
-                    type="text"
-                    name="firstName"
-                    label="Email or Username"
-                    onChange={handleChange}
-                    value={firstName || ''}
-                    validators={['required']}
-                    errorMessages={['this field is required']}
-                  />
-                  <TextField
-                    type="password"
-                    name="confirmPassword"
-                    onChange={handleChange}
-                    label="Confirm Password"
-                    value={confirmPassword || ''}
-                    validators={['required', 'isPasswordMatch']}
-                    errorMessages={['this field is required', "password didn't match"]}
-                  />
                   <RadioGroup
                     row
                     name="gender"
@@ -221,18 +224,7 @@ const Form = () => {
                       labelPlacement="end"
                       control={<Radio color="secondary" />}
                     />
-
-                    <FormControlLabel
-                      value="Others"
-                      label="Others"
-                      labelPlacement="end"
-                      control={<Radio color="secondary" />}
-                    />
                   </RadioGroup>
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label="I have read and agree to the terms of service."
-                  />
                 </Grid>
               </Grid>
 
