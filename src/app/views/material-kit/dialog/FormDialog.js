@@ -1,22 +1,21 @@
-import { Box } from '@mui/material';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import { React, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
+import { Box } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
+import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
 const initialState = {
-  username: '',
-  email: '',
-  password: '',
-  phone: '',
-  address: '',
+  username: "",
+  email: "",
+  password: "",
+  phone: "",
+  address: "",
 };
 export default function FormDialog({ history }) {
   const [formData, setformData] = useState(initialState);
@@ -45,9 +44,9 @@ export default function FormDialog({ history }) {
       address,
     };
     try {
-      await axios.post('http://localhost:5000/api/ad/register', userData);
+      await axios.post("http://localhost:5000/api/ad/register", userData);
 
-      navigate('/dashboard/default');
+      navigate("/dashboard/default");
     } catch (err) {}
   };
 
@@ -57,7 +56,11 @@ export default function FormDialog({ history }) {
         Add new Admin
       </Button>
 
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title"> Add new Admin</DialogTitle>
         <DialogContent>
           <DialogContentText>Add Admin</DialogContentText>

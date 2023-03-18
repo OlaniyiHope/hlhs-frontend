@@ -111,7 +111,7 @@ const Exam = (term, classname, subject) => {
           />
         </Box>
         <div>
-          <h2>Exam</h2>
+          
           <select name="term" onChange={handleChange}>
             <option selected="true" disabled="disabled">
               What Term
