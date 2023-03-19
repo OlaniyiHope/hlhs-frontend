@@ -2,7 +2,7 @@
   "name": "matx-react",
   "version": "3.0.0",
   "private": true,
-  "proxy": "http://herokuapp.com/hlhs",
+  "proxy": "https://hlhs.herokuapp.com/api",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.19.2",
     "@emotion/react": "^11.5.0",
@@ -42,7 +42,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "ghp": "react-scripts build && gh-pages -d build"
