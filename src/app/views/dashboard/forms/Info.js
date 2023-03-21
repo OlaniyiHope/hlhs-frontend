@@ -1,6 +1,6 @@
-import {} from '@mui/material';
-import { Fragment, React, useState } from 'react';
-import { Box } from '@mui/system';
+import {} from "@mui/material";
+import { Fragment, React, useState } from "react";
+import { Box } from "@mui/system";
 import {
   Card,
   Button,
@@ -15,42 +15,43 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-} from '@mui/material';
-import RowCards from '../shared/RowCards';
-import { Breadcrumb } from 'app/components';
-import FormDialog2 from 'app/views/material-kit/dialog/FormDialog2';
-import useFetch from 'hooks/useFetch';
-const ContentBox = styled('div')(({ theme }) => ({
-  margin: '30px',
-  [theme.breakpoints.down('sm')]: { margin: '16px' },
+} from "@mui/material";
+import RowCards from "../shared/RowCards";
+import { Breadcrumb } from "app/components";
+import FormDialog2 from "app/views/material-kit/dialog/FormDialog2";
+import useFetch from "hooks/useFetch";
+import { Link } from "react-router-dom";
+const ContentBox = styled("div")(({ theme }) => ({
+  margin: "30px",
+  [theme.breakpoints.down("sm")]: { margin: "16px" },
 }));
 
-const Title = styled('span')(() => ({
-  fontSize: '1rem',
-  fontWeight: '500',
-  marginRight: '.5rem',
-  textTransform: 'capitalize',
+const Title = styled("span")(() => ({
+  fontSize: "1rem",
+  fontWeight: "500",
+  marginRight: ".5rem",
+  textTransform: "capitalize",
 }));
 
-const SubTitle = styled('span')(({ theme }) => ({
-  fontSize: '0.875rem',
+const SubTitle = styled("span")(({ theme }) => ({
+  fontSize: "0.875rem",
   color: theme.palette.text.secondary,
 }));
 
-const H4 = styled('h4')(({ theme }) => ({
-  fontSize: '1rem',
-  fontWeight: '500',
-  marginBottom: '16px',
-  textTransform: 'capitalize',
+const H4 = styled("h4")(({ theme }) => ({
+  fontSize: "1rem",
+  fontWeight: "500",
+  marginBottom: "16px",
+  textTransform: "capitalize",
   color: theme.palette.text.secondary,
 }));
 const StyledTable = styled(Table)(() => ({
-  whiteSpace: 'pre',
-  '& thead': {
-    '& tr': { '& th': { paddingLeft: 0, paddingRight: 0 } },
+  whiteSpace: "pre",
+  "& thead": {
+    "& tr": { "& th": { paddingLeft: 0, paddingRight: 0 } },
   },
-  '& tbody': {
-    '& tr': { '& td': { paddingLeft: 0, textTransform: 'capitalize' } },
+  "& tbody": {
+    "& tr": { "& td": { paddingLeft: 0, textTransform: "capitalize" } },
   },
 }));
 
@@ -59,7 +60,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const Info = () => {
-  const { data, loading, error } = useFetch('/userrs/clo');
+  const { data, loading, error } = useFetch("/userrs/clo");
 
   const { palette } = useTheme();
   const [page, setPage] = useState(0);
@@ -80,11 +81,13 @@ const Info = () => {
         <Box className="breadcrumb">
           <Breadcrumb
             routeSegments={[
-              { name: 'Material', path: '/material' },
-              { name: 'Student Information' },
+              { name: "Material", path: "/material" },
+              { name: "Student Information" },
             ]}
           />
-          <FormDialog2 />
+          <Link to="/dashboard/student_add">
+            <FormDialog2 />
+          </Link>
         </Box>
 
         <Box width="100%" overflow="auto">
@@ -133,8 +136,8 @@ const Info = () => {
             onPageChange={handleChangePage}
             rowsPerPageOptions={[5, 10, 25]}
             onRowsPerPageChange={handleChangeRowsPerPage}
-            nextIconButtonProps={{ 'aria-label': 'Next Page' }}
-            backIconButtonProps={{ 'aria-label': 'Previous Page' }}
+            nextIconButtonProps={{ "aria-label": "Next Page" }}
+            backIconButtonProps={{ "aria-label": "Previous Page" }}
           />
         </Box>
 

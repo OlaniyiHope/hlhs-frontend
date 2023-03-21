@@ -19,7 +19,7 @@ import {
 import RowCards from "../shared/RowCards";
 import { Breadcrumb } from "app/components";
 import useFetch from "hooks/useFetch";
-import FormDialog16 from "app/views/material-kit/dialog/FormDialog16";
+import FormDialog15 from "app/views/material-kit/dialog/FormDialog15";
 const ContentBox = styled("div")(({ theme }) => ({
   margin: "30px",
   [theme.breakpoints.down("sm")]: { margin: "16px" },
@@ -58,8 +58,9 @@ const StyledButton = styled(Button)(({ theme }) => ({
   margin: theme.spacing(1),
 }));
 
-const Grade = () => {
-  const { data, loading, error } = useFetch("/grade");
+const Sub6 = () => {
+  const { data, loading, error } = useFetch("/subject/JS3");
+
   const { palette } = useTheme();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -80,43 +81,32 @@ const Grade = () => {
           <Breadcrumb
             routeSegments={[
               { name: "Material", path: "/material" },
-              { name: "Manage Grade" },
+              { name: "SS3 Subjects" },
             ]}
           />
-          <FormDialog16 />
+          <FormDialog15 />
         </Box>
 
         <Box width="100%" overflow="auto">
           <StyledTable>
             <TableHead>
               <TableRow>
-                <TableCell align="left">S/N</TableCell>
-                <TableCell align="left">Grade Name</TableCell>
-                <TableCell align="left">Grade Point</TableCell>
-                <TableCell align="center">Mark From</TableCell>
-                <TableCell align="center">MarkupTo</TableCell>
-                <TableCell align="center">Comment</TableCell>
+                <TableCell align="center">S/N</TableCell>
+                <TableCell align="left">Subject Name</TableCell>
+                <TableCell align="center">Teacher</TableCell>
+                <TableCell align="center">Class</TableCell>
+
                 <TableCell align="right">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {data &&
-                data.map((data) => (
-                  <TableRow key={data._id}>
+                data.map((item) => (
+                  <TableRow key={item._id}>
                     <TableCell align="center"></TableCell>
-                    <TableCell align="left">{data.grade_name}</TableCell>
-                    <TableCell align="center">
-                      <TableCell align="left">{data.gradepoint}</TableCell>
-                    </TableCell>
-                    <TableCell align="center">
-                      <TableCell align="left">{data.markfrom}</TableCell>
-                    </TableCell>
-                    <TableCell align="center">
-                      <TableCell align="left">{data.markupto}</TableCell>
-                    </TableCell>
-                    <TableCell align="center">
-                      <TableCell align="left">{data.comment}</TableCell>
-                    </TableCell>
+                    <TableCell align="left">{item.name}</TableCell>
+                    <TableCell align="center">{item.teacher}</TableCell>
+                    <TableCell align="center">{item.classname}</TableCell>
 
                     <TableCell align="right">
                       <IconButton>
@@ -167,4 +157,4 @@ const Grade = () => {
   );
 };
 
-export default Grade;
+export default Sub6;

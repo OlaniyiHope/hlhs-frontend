@@ -16,7 +16,7 @@ const initialState = {
   teachers_name: "",
   classname: "",
 };
-export default function FormDialog4() {
+export default function FormDialog15() {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const [state, setState] = useState({ date: new Date() });
@@ -58,7 +58,7 @@ export default function FormDialog4() {
   return (
     <Box>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Add new Subjecr
+        Add new Subject
       </Button>
 
       <Dialog

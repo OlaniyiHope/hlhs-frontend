@@ -1,15 +1,51 @@
-import { Box } from '@mui/material';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import React from 'react';
-
+import { Box } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Navigate, useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import React from "react";
+import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import axios from "axios";
+import { useEffect, useState } from "react";
+const initialState = {
+  subject_name: "",
+  teachers_name: "",
+  classname: "",
+};
 export default function FormDialog5() {
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const [state, setState] = useState({ date: new Date() });
+  const [formData, setformData] = useState(initialState);
+  const { teachers_name, subject_name, classname } = formData;
+  const [classs, setClasss] = useState();
+  const [error, setError] = useState();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = {
+      teachers_name,
+      subject_name,
+      classname,
+    };
+    try {
+      await axios.post(
+        "https://hlhs.herokuapp.com/api/userrs/register",
+        formData
+      );
+
+      navigate("/dashboard/default");
+    } catch (err) {}
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setformData({ ...formData, [name]: value });
+  };
 
   function handleClickOpen() {
     setOpen(true);
@@ -22,39 +58,55 @@ export default function FormDialog5() {
   return (
     <Box>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Add new Subject
+        Add new Subjecr
       </Button>
 
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title"> Add new Admin</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title"> Add new subject</DialogTitle>
         <DialogContent>
-          <DialogContentText>Add Admin</DialogContentText>
-          <TextField autoFocus margin="dense" id="name" label="Name" type="email" fullWidth />
           <TextField
             autoFocus
             margin="dense"
-            id="email"
-            label="Email/Username"
-            type="email"
+            name="name"
+            value={subject_name}
+            placeholder="Subject name"
+            type="text"
+            onChange={handleChange}
             fullWidth
           />
           <TextField
             autoFocus
             margin="dense"
-            id="password"
-            label="Password"
-            type="email"
+            name="name"
+            value={teachers_name}
+            placeholder="teachers name"
+            type="text"
+            onChange={handleChange}
             fullWidth
           />
-          <TextField autoFocus margin="dense" id="phone" label="Phone" type="email" fullWidth />
-          <TextField autoFocus margin="dense" id="address" label="Address" type="email" fullWidth />
+          <TextField
+            type="text"
+            name="classname"
+            autoFocus
+            margin="dense"
+            onChange={handleChange}
+            value={classname}
+            placeholder="Enter  class"
+            validators={["required"]}
+            errorMessages={["this field is required"]}
+            fullWidth
+          />
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" color="secondary" onClick={handleClose}>
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">
-            Add Admin
+            Add Subject
           </Button>
         </DialogActions>
       </Dialog>

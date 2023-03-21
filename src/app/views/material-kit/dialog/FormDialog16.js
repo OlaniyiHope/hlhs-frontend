@@ -12,25 +12,29 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import axios from "axios";
 import { useEffect, useState } from "react";
 const initialState = {
-  subject_name: "",
-  teachers_name: "",
-  classname: "",
+  grade_name: "",
+  gradepoint: "",
+  markupto: "",
+  markfrom: "",
+  comment: "",
 };
-export default function FormDialog4() {
+export default function FormDialog16() {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const [state, setState] = useState({ date: new Date() });
   const [formData, setformData] = useState(initialState);
-  const { teachers_name, subject_name, classname } = formData;
+  const { grade_name, gradepoint, markupto, markfrom, comment } = formData;
   const [classs, setClasss] = useState();
   const [error, setError] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
-      teachers_name,
-      subject_name,
-      classname,
+      grade_name,
+      gradepoint,
+      markupto,
+      markfrom,
+      comment,
     };
     try {
       await axios.post(
@@ -58,7 +62,7 @@ export default function FormDialog4() {
   return (
     <Box>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Add new Subjecr
+        Add new Grades
       </Button>
 
       <Dialog
@@ -66,14 +70,14 @@ export default function FormDialog4() {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title"> Add new subject</DialogTitle>
+        <DialogTitle id="form-dialog-title"> Add new grade</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
-            name="name"
-            value={subject_name}
-            placeholder="Subject name"
+            name="gradename"
+            value={grade_name}
+            placeholder="Grade name"
             type="text"
             onChange={handleChange}
             fullWidth
@@ -81,21 +85,45 @@ export default function FormDialog4() {
           <TextField
             autoFocus
             margin="dense"
-            name="name"
-            value={teachers_name}
-            placeholder="teachers name"
-            type="text"
+            name="gradepoint"
+            value={gradepoint}
+            placeholder="Enter grade point"
+            type="number"
             onChange={handleChange}
             fullWidth
           />
           <TextField
-            type="text"
-            name="classname"
+            type="number"
+            name="markfrom"
             autoFocus
             margin="dense"
             onChange={handleChange}
-            value={classname}
-            placeholder="Enter  class"
+            value={markfrom}
+            placeholder="Enter Mark from"
+            validators={["required"]}
+            errorMessages={["this field is required"]}
+            fullWidth
+          />
+          <TextField
+            type="number"
+            name="markupto"
+            autoFocus
+            margin="dense"
+            onChange={handleChange}
+            value={markupto}
+            placeholder="Enter Mark Up to"
+            validators={["required"]}
+            errorMessages={["this field is required"]}
+            fullWidth
+          />
+          <TextField
+            type="text"
+            name="comment"
+            autoFocus
+            margin="dense"
+            onChange={handleChange}
+            value={comment}
+            placeholder="Enter Comment"
             validators={["required"]}
             errorMessages={["this field is required"]}
             fullWidth
@@ -106,7 +134,7 @@ export default function FormDialog4() {
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">
-            Add Subject
+            Add Grade
           </Button>
         </DialogActions>
       </Dialog>

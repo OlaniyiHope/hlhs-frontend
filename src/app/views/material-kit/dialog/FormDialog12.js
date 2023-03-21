@@ -22,13 +22,13 @@ const initialState = {
   email: "",
   password: "",
 };
-export default function FormDialog3() {
+export default function FormDialog12() {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const [state, setState] = useState({ date: new Date() });
   const [formData, setformData] = useState(initialState);
   const {
-    teachers_name,
+    student_name,
     classname,
     address,
     parents_name,
@@ -52,7 +52,7 @@ export default function FormDialog3() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
-      teachers_name,
+      student_name,
       classname,
       address,
       parents_name,
@@ -88,7 +88,7 @@ export default function FormDialog3() {
   return (
     <Box>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Add new Teacher
+        Add new Student
       </Button>
 
       <Dialog
@@ -96,16 +96,41 @@ export default function FormDialog3() {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title"> Add new teacher</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          {" "}
+          Add new student into JS1 Class
+        </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
-            name="name"
-            value={teachers_name}
-            placeholder="Enter teachers name"
+            name="student_name"
+            value={student_name}
+            placeholder="Enter your name"
             type="text"
             onChange={handleChange}
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            type="text"
+            name="classname"
+            value={classname}
+            onChange={handleChange}
+            errorMessages={["this field is required"]}
+            placeholder="Enter your class"
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            type="text"
+            name="parents_name"
+            value={parents_name}
+            onChange={handleChange}
+            errorMessages={["this field is required"]}
+            placeholder="Enter your parent name"
             fullWidth
           />
           <TextField
@@ -115,7 +140,7 @@ export default function FormDialog3() {
             margin="dense"
             onChange={handleChange}
             value={address}
-            placeholder="Enter  address"
+            placeholder="Enter your address"
             validators={["required"]}
             errorMessages={["this field is required"]}
             fullWidth
@@ -125,7 +150,7 @@ export default function FormDialog3() {
             margin="dense"
             type="email"
             name="email"
-            placeholder="Enter email"
+            placeholder="Enter your email"
             value={email}
             onChange={handleChange}
             validators={["required", "isEmail"]}
@@ -174,7 +199,7 @@ export default function FormDialog3() {
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">
-            Add Teacher
+            Add Student
           </Button>
         </DialogActions>
       </Dialog>
